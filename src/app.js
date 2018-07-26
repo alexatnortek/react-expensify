@@ -15,9 +15,9 @@ import "react-dates/initialize";
 const store = configureStore();
 
 // console.log(store.getState());
-const expenseOne = store.dispatch(addExpense({description: 'Water Bill', amount: 20000}));
-const expenseTwo = store.dispatch(addExpense({ description: 'Gas Bill', amount: 40000, createdAt: 1000 }));
-const expenseThree = store.dispatch(addExpense({ description: 'Rent', amount: 120000 }));
+// const expenseOne = store.dispatch(addExpense({description: 'Water Bill', amount: 20000}));
+// const expenseTwo = store.dispatch(addExpense({ description: 'Gas Bill', amount: 40000, createdAt: 1000 }));
+// const expenseThree = store.dispatch(addExpense({ description: 'Rent', amount: 120000 }));
 
 
 // console.log(store.getState());
