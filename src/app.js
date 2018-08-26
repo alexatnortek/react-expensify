@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import AppRouter from "./routers/AppRouter";
+import AppRouter, { history } from "./routers/AppRouter";
 import configureStore from './store/configureStore';
 // import { addExpense, removeExpense, editExpense } from "./actions/expenses";
 import { startSetExpenses } from "./actions/expenses";
-import { setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate } from "./actions/filters";
+import { login, logout } from "./actions/auth";
+// import { setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate } from "./actions/filters";
 import getVisibleExpenses from './selectors/expenses';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
@@ -13,7 +14,9 @@ import "react-dates/lib/css/_datepicker.css";
 import "react-dates/initialize";
 // import AddExpensePage from './components/AddExpensePage';
 
-import './firebase/firebase';
+import { firebase } from "./firebase/firebase";
+
+// import './firebase/firebase';
 
 // import './playground/promises';
 
@@ -51,11 +54,40 @@ const jsx = (
   </Provider>
 );
 
+let hasRendered = false;
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(jsx, document.getElementById("app"));
+    hasRendered = true;
+  }
+};
+
 
 ReactDOM.render(<p>Loading...</p>, document.getElementById("app"));
 
-store.dispatch(startSetExpenses()).then(() => {
-  ReactDOM.render(jsx, document.getElementById("app"));
-})
+// store.dispatch(startSetExpenses()).then(() => {
+//   ReactDOM.render(jsx, document.getElementById("app"));
+// })
 
 // ReactDOM.render(jsx, document.getElementById("app"));
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // console.log('log in');
+    console.log('uid', user.uid);
+    store.dispatch(login(user.uid));
+    store.dispatch(startSetExpenses()).then(() => {
+      // ReactDOM.render(jsx, document.getElementById("app"));
+      renderApp();
+      if (history.location.pathname === '/') {
+        history.push('/dashboard');
+      }
+    });
+  } else {
+    // console.log('log out');
+    // ReactDOM.render(jsx, document.getElementById("app"));
+    store.dispatch(logout());
+    renderApp();
+    history.push('/')
+  }
+});

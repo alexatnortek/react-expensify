@@ -16,7 +16,7 @@ test('should setup filter sort by amount', () => {
   expect(state.sortBy).toBe('amount');
 });
 
-test('shoudl set sortBy to date', ()=> {
+test('should set sortBy to date', ()=> {
   const currentState = { 
     text: "", 
     sortBy: "amount", 
