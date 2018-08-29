@@ -19,7 +19,11 @@ module.exports = (env) => {
   const CSSExtract =  new ExtractTextPlugin('styles.css');
   // console.log('env', env);
 
-  return { entry: "./src/app.js", output: { path: path.join(__dirname, "public", "dist"), filename: "bundle.js" }, module: { rules: [{ loader: "babel-loader", test: /\.js$/, exclude: /node_modules/ }, { test: /\.s?css$/, use: CSSExtract.extract(
+  return { 
+    entry: ["babel-polyfill","./src/app.js"], 
+    output: { path: path.join(__dirname, "public", "dist"), 
+    filename: "bundle.js" }, 
+    module: { rules: [{ loader: "babel-loader", test: /\.js$/, exclude: /node_modules/ }, { test: /\.s?css$/, use: CSSExtract.extract(
             {
               use: [
                 {

@@ -4,11 +4,14 @@ import { startLogin } from "../actions/auth";
 // import { dispatch } from "rxjs/internal/observable/range";
 
 export const LoginPage = ({ startLogin }) => (
-  <div>
-    <p>This is my login page</p>
-    <button onClick={startLogin}>Login</button>
+  <div className="box-layout">
+    <div className="box-layout__box">
+      <h1 className="box-layout__title">Expensify</h1>
+      <p>It's time for your expenses</p>
+      <button className="button-layout" onClick={startLogin}>Login with Google</button>
+    </div>
   </div>
-)
+);
 
 const mapDispatchToProps = dispatch => ({
   startLogin: () => dispatch(startLogin())
